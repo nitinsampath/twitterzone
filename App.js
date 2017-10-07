@@ -9,11 +9,21 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <MapView style={styles.map}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: 37.8719,
+          longitude: -122.2585,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
-        }}/>
+        }}>
+        <MapView.Circle
+          center={{
+            latitude: 37.8719,
+            longitude: -122.2585,
+            latitudeDelta: 0.0922,
+          }}
+          radius = {100}
+          fillColor =  "rgba(255, 92, 92, 0.5)"
+        />
+        </MapView>
       </View>
     );
   }
@@ -36,5 +46,6 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0
+
   }
 });

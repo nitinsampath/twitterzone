@@ -52,6 +52,7 @@ export default TabNavigator(
         );
       },
     }),
+    header: { visible: false },
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     animationEnabled: false,

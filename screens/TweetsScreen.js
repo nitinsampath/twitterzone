@@ -5,7 +5,7 @@ import { ExpoLinksView } from '@expo/samples';
 
 export default class TweetsScreen extends React.Component {
   static navigationOptions = {
-    title: 'Links',
+    title: 'Tweets',
     header: null,
   };
 

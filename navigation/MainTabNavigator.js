@@ -8,6 +8,7 @@ import Colors from '../constants/Colors';
 import MapScreen from '../screens/MapScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import TweetsScreen from "../screens/TweetsScreen";
 
 
 export default TabNavigator(

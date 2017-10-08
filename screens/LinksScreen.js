@@ -76,7 +76,6 @@ const mapStateToProps = function(state) {
   const { events } = entities;
   const { alertList } = alerts;
   let me = tracker;
-  console.log(me);
   // sort events by distance to user.
   let eventList = Object.keys(events).map((eventName) => {
     let e = events[eventName];

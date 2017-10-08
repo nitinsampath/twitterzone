@@ -8,10 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import { WebBrowser, Notifications } from 'expo';
 import { MonoText } from '../components/StyledText';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import { MAP_STYLE } from "../constants/config";
+import Toast, {DURATION} from "react-native-easy-toast";
 
 /*
 PROPS.
@@ -29,9 +30,22 @@ PROPS.
 */
 
 class MapScreenView extends React.Component {
+  
+  /*
+  Display notification if received a new alert.
+  */
+  componentWillUpdate(nextProps, nextState) {
+    const nextAlertMarkers = nextProps.alertMarkers;
+    if (nextAlertMarkers.length > 0) {
+      const newAlertMarker = nextProps.alertMarkers[nextProps.alertMarkers.length - 1];
+      Notifications.presentLocalNotificationAsync({
+        title: `ALERT - ${newAlertMarker.name}`,
+        body: `${newAlertMarker.name}`
+      });
+    }
+  }
   renderMarkers() {
     const { alertMarkers } = this.props;
-    console.log(alertMarkers);
     return alertMarkers.map((marker) => {
       return (
         <MapView.Marker

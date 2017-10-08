@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { initTracker } from "../actions/TrackerActions";
 import MapScreenView from "../components/MapScreenView";
+import { StackNavigator } from "react-navigation";
 
 /*
 PROPS.
@@ -28,12 +29,19 @@ class MapScreen extends React.Component {
     // initialize key state stuff
     dispatch(initTracker());
   }
+
+
+
   render() {
     const { entities, alerts } = this.props;
     const { newAlerts } = alerts;
     const { events } = entities;
     const alertMarkers = newAlerts.map((alert) => {
-      return events[alert];
+      const e = events[alert];
+      return {
+        ...e,
+        onPress: (pressedEvent) => {},
+      }
     });
     return (
       <MapScreenView alertMarkers={alertMarkers} />

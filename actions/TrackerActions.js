@@ -8,8 +8,6 @@ export function initTracker() {
   return (dispatch, getState) => {
     const { tracker } = getState();
     const { latitude, longitude } = tracker;
-    //dispatch(setLocation(latitude, longitude));
-    console.log("Ping tracker API endpoint:", API_URL);
 
     fetch2(API_URL + "addTracker", {
       queryParams: {

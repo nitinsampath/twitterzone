@@ -38,6 +38,7 @@ class LinksScreen extends React.Component {
 
   render() {
     const { eventList } = this.props;
+    const { navigate } = this.props.navigation;
     return (
       <View>
         <View style={ headerStyles }>
@@ -54,7 +55,9 @@ class LinksScreen extends React.Component {
                     ({item}) => <ListItem
                       title={`${item.name}`}
                       key={item.key}
-                      subtitle={`${item.distance.toFixed(2)} kilometers from you`}/>
+                      subtitle={`${item.distance.toFixed(2)} kilometers from you`}
+                      onPress = {(pressedEvent) => navigate('TweetsScreen', {name: item.name})}
+                      />
                   }
               />
             </List>

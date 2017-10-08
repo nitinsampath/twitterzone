@@ -1,18 +1,42 @@
 import * as types from "../constants/ActionTypes";
 import {API_URL} from "../constants/config";
 import fetch2 from "../utils/fetch2";
+import { Permissions, Notifications } from 'expo';
+
 
 import {fetchEvents, receiveEvents} from "../actions/EventActions";
 
-export function initTracker() {
-  return (dispatch, getState) => {
+export function initTracker(notificationcallback) {
+  return async (dispatch, getState) => {
+    //   const { status: existingStatus } = await Permissions.getAsync(
+    //   Permissions.NOTIFICATIONS
+    // );
+    // let finalStatus = existingStatus;
+    //
+    // // only ask if permissions have not already been determined, because
+    // // iOS won't necessarily prompt the user a second time.
+    // if (existingStatus !== 'granted') {
+    //   // Android remote notification permissions are granted during the app
+    //   // install, so this will only ask on iOS
+    //   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    //   finalStatus = status;
+    // }
+    //
+    // // Stop here if the user did not grant permissions
+    // if (finalStatus !== 'granted') {
+    //   return;
+    // }
+
     const { tracker } = getState();
     const { latitude, longitude } = tracker;
+    //let token = await Notifications.getExpoPushTokenAsync();
+
 
     fetch2(API_URL + "addTracker", {
       queryParams: {
         latitude,
         longitude,
+        token,
       },
       method: "GET"
     }).then((res) => {
@@ -31,7 +55,9 @@ export function initTracker() {
     }).catch((err) => {
       console.log("Error initializing tracker with API", err);
     });
+    //Notifications.addListener(notificationcallback);
   };
+
 }
 
 export function setLocation(latitude, longitude) {

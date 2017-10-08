@@ -5,7 +5,8 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
-import MapScreen from '../screens/MapScreen';
+import {MapScreenNav} from '../screens/MapScreenNav';
+import {LinksScreenNav} from '../screens/LinksScreenNav';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import TweetsScreen from "../screens/TweetsScreen";
@@ -13,11 +14,11 @@ import TweetsScreen from "../screens/TweetsScreen";
 
 export default TabNavigator(
   {
-    MapScreen: {
-      screen: MapScreen,
+    MapScreenNav: {
+      screen: MapScreenNav,
     },
-    Links: {
-      screen: LinksScreen,
+    LinksScreenNav: {
+      screen: LinksScreenNav,
     },
     Settings: {
       screen: SettingsScreen,
@@ -29,12 +30,12 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case 'MapScreen':
+          case 'MapScreenNav':
             iconName = Platform.OS === 'ios'
               ? `ios-information-circle${focused ? '' : '-outline'}`
               : 'md-information-circle';
             break;
-          case 'Links':
+          case 'LinksScreenNav':
             iconName = Platform.OS === 'ios'
               ? `ios-link${focused ? '' : '-outline'}`
               : 'md-link';

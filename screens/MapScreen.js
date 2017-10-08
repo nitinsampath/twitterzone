@@ -23,16 +23,24 @@ class MapScreen extends React.Component {
     header: null,
   };
 
+  // state = {
+  //     notification: {},
+  //   };
+
   constructor(props) {
     super(props);
     const { dispatch } = this.props;
     // initialize key state stuff
-    dispatch(initTracker());
+    dispatch(initTracker((notification) => {
+      this.setState({notification: notification});
+    }));
+
   }
 
 
 
   render() {
+    const { navigate } = this.props.navigation;
     const { entities, alerts } = this.props;
     const { newAlerts } = alerts;
     const { events } = entities;
@@ -40,11 +48,17 @@ class MapScreen extends React.Component {
       const e = events[alert];
       return {
         ...e,
-        onPress: (pressedEvent) => {},
+        onPress: (pressedEvent) => navigate('TweetsScreen', {name: e.name}),
       }
     });
     return (
+      <View>
       <MapScreenView alertMarkers={alertMarkers} />
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Origin: {this.state.notification.origin}</Text>
+        <Text>Data: {JSON.stringify(this.state.notification.data)}</Text>
+      </View>
+      </View>
     );
   }
 }

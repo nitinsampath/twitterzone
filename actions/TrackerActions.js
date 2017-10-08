@@ -2,14 +2,15 @@ import * as types from "../constants/ActionTypes";
 import {API_URL} from "../constants/config";
 import fetch2 from "../utils/fetch2";
 
-import {fetchEvents} from "../actions/EventActions";
+import {fetchEvents, receiveEvents} from "../actions/EventActions";
 
 export function initTracker() {
   return (dispatch, getState) => {
     const { tracker } = getState();
     const { latitude, longitude } = tracker;
-    dispatch(setLocation(latitude, longitude));
+    //dispatch(setLocation(latitude, longitude));
     console.log("Ping tracker API endpoint:", API_URL);
+
     fetch2(API_URL + "addTracker", {
       queryParams: {
         latitude,

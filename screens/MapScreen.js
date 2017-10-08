@@ -14,9 +14,6 @@ PROPS.
 
   }
 }
-
-
-
 */
 
 
@@ -32,8 +29,14 @@ class MapScreen extends React.Component {
     dispatch(initTracker());
   }
   render() {
+    const { entities, alerts } = this.props;
+    const { newAlerts } = alerts;
+    const { events } = entities;
+    const alertMarkers = newAlerts.map((alert) => {
+      return events[alert];
+    });
     return (
-      <MapScreenView {...this.props} />
+      <MapScreenView alertMarkers={alertMarkers} />
     );
   }
 }

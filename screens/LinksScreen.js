@@ -4,6 +4,7 @@ import { List, ListItem } from 'react-native-elements'
 import { ExpoLinksView } from '@expo/samples';
 
 import { connect } from "react-redux";
+import { distLatLonKm } from "../utils/distance";
 
 const headerStyles = {
   backgroundColor: "#2F4858",
@@ -13,6 +14,21 @@ const headerStyles = {
   justifyContent: "space-between",
 };
 
+/*
+PROPS.
+{
+  eventList: sortedArrayOf({
+    name: STRING  - Event name.
+    key: STRING
+    latitude: FLOAT
+    longitude: FLOAT
+    sentiment: FLOAT
+    distance: FLOAT
+    description: STRING - optional.
+  })
+}
+
+*/
 
 class LinksScreen extends React.Component {
   static navigationOptions = {
@@ -21,6 +37,7 @@ class LinksScreen extends React.Component {
   };
 
   render() {
+    const { eventList } = this.props;
     return (
       <View>
         <View style={ headerStyles }>
@@ -32,10 +49,12 @@ class LinksScreen extends React.Component {
         </View>
             <List>
               <FlatList
-                data={[{title: 'Title Text', key: 'item1'}]}
+                data={eventList}
                 renderItem={
                     ({item}) => <ListItem
-                      title={`${item.title}`}/>
+                      title={`${item.name}`}
+                      key={item.key}
+                      subtitle={`${item.distance.toFixed(2)} kilometers from you`}/>
                   }
               />
             </List>
@@ -53,7 +72,30 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = function(state) {
-  return state;
+  const { entities, alerts, tracker } = state;
+  const { events } = entities;
+  const { alertList } = alerts;
+  let me = tracker;
+  console.log(me);
+  // sort events by distance to user.
+  let eventList = Object.keys(events).map((eventName) => {
+    let e = events[eventName];
+    const dist = distLatLonKm(me.latitude, me.longitude, e.latitude, e.longitude);
+    //console.log([me.lat, me.lon, e.latitude, e.longitude]);
+    //console.log("Computed dist:" + dist);
+    return {
+      ...e,
+      distance: dist,
+      key: e.name,
+    };
+  });
+  eventList.sort((a, b) => {
+    if (a.distance < b.distance) { return -1; }
+    if (a.distance > b.distance) { return 1; }
+    return 0;
+  });
+
+  return {eventList: eventList};
 }
 
 export default connect(mapStateToProps)(LinksScreen);

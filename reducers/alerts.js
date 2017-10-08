@@ -7,9 +7,9 @@ const initialState = {
 export default function alerts(state = initialState, action) {
     switch(action.type) {
         case types.ADD_ALERT:
-            return { newAlerts: [...newAlerts, action.name] };
+            return { newAlerts: [...state.newAlerts, action.name] };
         case types.POP_ALERT:
-            return { newAlerts: newAlerts.slice[0, newAlerts.length - 1] }
+            return { newAlerts: state.newAlerts.slice[0, state.newAlerts.length - 1] }
         default:
             return state;
     }

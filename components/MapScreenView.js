@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
-import MapView from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import { MAP_STYLE } from "../constants/config";
 
 /*
 PROPS.
@@ -19,32 +20,42 @@ PROPS.
   alertMarkers: arrayOf({
     name: STRING  - Event name.
     latitude: FLOAT - Event latitude.
-    longitude: FLOAT  - Event longitude
+    longitude: FLOAT  - Event longitude.
+    sentiment: FLOAT  - Event sentiment.
+    onPress: FUNCTION   - Callback to call when the marker is pressed.
   })
 }
 
 */
 
 class MapScreenView extends React.Component {
+  renderMarkers() {
+    const { alertMarkers } = this.props;
+    console.log(alertMarkers);
+    return alertMarkers.map((marker) => {
+      return (
+        <MapView.Marker
+          title={marker.title}
+          coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
+          image={require("../assets/images/marker.png")}
+          onPress={marker.onPress}
+        />
+      );
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
         <MapView style={styles.map}
+        provider={PROVIDER_GOOGLE}
+        customMapStyle={MAP_STYLE}
         initialRegion={{
           latitude: 37.8719,
           longitude: -122.2585,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}>
-        <MapView.Circle
-          center={{
-            latitude: 37.8719,
-            longitude: -122.2585,
-            latitudeDelta: 0.0922,
-          }}
-          radius = {100}
-          fillColor =  "rgba(255, 92, 92, 0.5)"
-        />
+          {this.renderMarkers()}
         </MapView>
       </View>
     );

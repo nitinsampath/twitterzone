@@ -28,6 +28,7 @@ Receives all events and handles each one individually.
 */
 export function receiveEvents(events) {
   return dispatch => {
+    console.log("receive events", events);
     Object.keys(events).forEach((eventName) => {
       dispatch(consumeEvent(events[eventName]));
     });

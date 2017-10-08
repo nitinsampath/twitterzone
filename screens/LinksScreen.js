@@ -3,6 +3,8 @@ import { View, Text, ScrollView, StyleSheet, FlatList, Image } from 'react-nativ
 import { List, ListItem } from 'react-native-elements'
 import { ExpoLinksView } from '@expo/samples';
 
+import { connect } from "react-redux";
+
 const headerStyles = {
   backgroundColor: "#2F4858",
   padding: 30,
@@ -12,7 +14,7 @@ const headerStyles = {
 };
 
 
-export default class LinksScreen extends React.Component {
+class LinksScreen extends React.Component {
   static navigationOptions = {
     title: 'Links',
     header: null ,
@@ -49,3 +51,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+const mapStateToProps = function(state) {
+  return state;
+}
+
+export default connect(mapStateToProps)(LinksScreen);

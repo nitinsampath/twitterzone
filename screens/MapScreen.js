@@ -1,64 +1,46 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { WebBrowser } from 'expo';
+import { connect } from "react-redux";
+import { initTracker } from "../actions/TrackerActions";
+import MapScreenView from "../components/MapScreenView";
 
-import { MonoText } from '../components/StyledText';
+/*
+PROPS.
+{
+  alerts: {
+    newAlerts: arrayOf(STRING)  - String names (unique identifiers) of events.
+  }
+  entities: {
+    events: setOf(EVENT OBJECT) - Collection of extant events. Use event names to get events.
 
-import MapView from 'react-native-maps';
+  }
+}
 
-export default class MapScreen extends React.Component {
+
+
+*/
+
+
+class MapScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
+  constructor(props) {
+    super(props);
+    const { dispatch } = this.props;
+    // initialize key state stuff
+    dispatch(initTracker());
+  }
   render() {
     return (
-      <View style={styles.container}>
-        <MapView style={styles.map}
-        initialRegion={{
-          latitude: 37.8719,
-          longitude: -122.2585,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}>
-        <MapView.Circle
-          center={{
-            latitude: 37.8719,
-            longitude: -122.2585,
-            latitudeDelta: 0.0922,
-          }}
-          radius = {100}
-          fillColor =  "rgba(255, 92, 92, 0.5)"
-        />
-        </MapView>
-      </View>
+      <MapScreenView {...this.props} />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top:0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  },
-  map: {
-    position:'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0
-  },
 
-});
+const mapStateToProps = function(state) {
+  return state;
+}
+
+export default connect(mapStateToProps)(MapScreen);
